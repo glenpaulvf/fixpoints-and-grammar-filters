@@ -13,11 +13,11 @@ let rec (member : 'a -> 'a list -> bool) =
 	|	[] -> true
 	| h::t -> if (member h b) then subset t b else false
 
-let rec (equal_sets : 'a list -> 'a list -> bool) =
+let (equal_sets : 'a list -> 'a list -> bool) =
 	fun a b ->
 	subset a b && subset b a
 
-let rec (add_element : 'a -> 'a list -> 'a list) =
+let (add_element : 'a -> 'a list -> 'a list) =
 	fun x s ->
 	if member x s then s else x::s
 
