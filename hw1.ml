@@ -1,4 +1,4 @@
-(* Homework 1. Fixpoints and grammar filtrs *)
+(* Homework 1. Fixpoints and grammar filters *)
 
 let rec (member : 'a -> 'a list -> bool) =
 	fun x s ->
@@ -14,4 +14,8 @@ let rec (member : 'a -> 'a list -> bool) =
 	| h::t ->
 		if (member h b) then subset t b 
 		else false
+
+let rec (equal_sets : 'a list -> 'a list -> bool) =
+	fun a b ->
+	subset a b && subset b a
 
