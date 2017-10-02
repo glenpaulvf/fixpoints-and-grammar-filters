@@ -40,7 +40,7 @@ let rec computed_fixed_point eq f x =
 
 let rec computed_periodic_point eq f p x =
 	match p with
-	| 0 -> if fixed_point eq f x then p else 0
+	| 0 -> if fixed_point eq f x then p else -1
 	| _ -> if fixed_point eq f x then p else computed_periodic_point eq f (p - 1) (f x)
 
 let rec while_away s p x =
