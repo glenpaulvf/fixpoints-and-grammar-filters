@@ -8,7 +8,7 @@ let rec member x s =
 
  let rec subset a b =
 	match a with
-	|	[] -> true
+	| [] -> true
 	| h::t -> if member h b then subset t b else false
 
 let equal_sets a b =
@@ -37,4 +37,9 @@ let fixed_point eq f x =
 
 let rec computed_fixed_point eq f x =
 	if fixed_point eq f x then x else computed_fixed_point eq f (f x)
+
+let rec computed_periodic_point eq f p x =
+	match p with
+	| 0 -> if fixed_point eq f x then p else -1
+	| _ -> if fixed_point eq f x then p else computed_periodic_point eq f (p - 1) (f x)
 
