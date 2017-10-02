@@ -11,7 +11,7 @@ let rec (member : 'a -> 'a list -> bool) =
 	fun a b ->
 	match a with
 	|	[] -> true
-	| h::t -> if (member h b) then subset t b else false
+	| h::t -> if member h b then subset t b else false
 
 let (equal_sets : 'a list -> 'a list -> bool) =
 	fun a b ->
@@ -30,4 +30,9 @@ let rec (set_union : 'a list -> 'a list -> 'a list) =
 let rec set_intersection a b =
 	match a with
 	| [] -> []
-	| h::t -> if (member h b) then add_element h (set_intersection t b) else set_intersection t b
+	| h::t -> if member h b then add_element h (set_intersection t b) else set_intersection t b
+
+let rec set_diff a b =
+	match a with
+	| [] -> []
+	| h::t -> if not (member h b) then add_element h (set_diff t b) else set_diff t b
