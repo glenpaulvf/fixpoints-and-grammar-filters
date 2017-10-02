@@ -15,7 +15,7 @@ let equal_sets a b =
 	subset a b && subset b a
 
 let add_element x s =
-	if member x s then s else x::s
+	if member x s then s else List.cons x s
 
 let rec set_union a b =
 	match a with
@@ -44,5 +44,15 @@ let rec computed_periodic_point eq f p x =
 	| _ -> if fixed_point eq f x then p else computed_periodic_point eq f (p - 1) (f x)
 
 let rec while_away s p x =
-	if p x then x::(while_away s p (s x)) else []
+	if p x then List.cons x (while_away s p (s x)) else []
+
+let rec decoding (n, v) =
+	match n with
+	| 0 -> []
+	| _ -> List.cons v (decoding (n - 1, v))
+
+let rec rle_decode lp =
+	match lp with
+	| [] -> []
+	| (n, v)::t -> List.append (decoding (n, v)) (rle_decode t)
 
