@@ -43,3 +43,6 @@ let rec computed_periodic_point eq f p x =
 	| 0 -> if fixed_point eq f x then p else -1
 	| _ -> if fixed_point eq f x then p else computed_periodic_point eq f (p - 1) (f x)
 
+let rec while_away s p x =
+	if p x then x::(while_away s p (s x)) else []
+
