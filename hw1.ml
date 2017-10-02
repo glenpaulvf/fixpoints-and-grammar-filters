@@ -26,3 +26,8 @@ let rec (set_union : 'a list -> 'a list -> 'a list) =
 	match a with
 	| [] -> b
 	| h::t -> add_element h (set_union t b)
+
+let rec set_intersection a b =
+	match a with
+	| [] -> []
+	| h::t -> if (member h b) then add_element h (set_intersection t b) else set_intersection t b
