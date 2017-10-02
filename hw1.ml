@@ -36,3 +36,10 @@ let rec set_diff a b =
 	match a with
 	| [] -> []
 	| h::t -> if not (member h b) then add_element h (set_diff t b) else set_diff t b
+
+let fixed_point eq f x =
+	if eq (f x) x then true else false
+
+let rec computed_fixed_point eq f x =
+	if fixed_point eq f x then x else computed_fixed_point eq f (f x)
+
