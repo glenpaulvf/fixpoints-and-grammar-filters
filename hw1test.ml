@@ -17,4 +17,8 @@ let set_intersection_test1 =
   equal_sets (set_intersection [3;1;3] [1;2;3]) [1;3]
 let set_intersection_test2 =
   equal_sets (set_intersection [1;2;3;4] [3;1;2;4]) [4;3;2;1]
-  
+
+let set_diff_test0 = equal_sets (set_diff [1;3] [1;4;3;1]) []
+let set_diff_test1 = equal_sets (set_diff [4;3;1;1;3] [1;3]) [4]
+let set_diff_test2 = equal_sets (set_diff [4;3;1] []) [1;3;4]
+let set_diff_test3 = equal_sets (set_diff [] [4;3;1]) []
