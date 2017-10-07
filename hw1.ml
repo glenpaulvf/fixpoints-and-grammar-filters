@@ -38,10 +38,13 @@ let fixed_point eq f x =
 let rec computed_fixed_point eq f x =
 	if fixed_point eq f x then x else computed_fixed_point eq f (f x)
 
-let rec computed_periodic_point eq f p x =
+let rec periodic_point eq f p x =
 	match p with
-	| 0 -> if fixed_point eq f x then p else -1
-	| _ -> if fixed_point eq f x then p else computed_periodic_point eq f (p - 1) (f x)
+	| 0 -> x
+	| _ -> periodic_point eq f (p - 1) (f x)
+
+let rec computed_periodic_point eq f p x =
+	if eq (periodic_point eq f p x) x then x else computed_periodic_point eq f p (f x)
 
 let rec while_away s p x =
 	if p x then List.cons x (while_away s p (s x)) else []
