@@ -59,3 +59,7 @@ let rec rle_decode lp =
 	| [] -> []
 	| (n, v)::t -> List.append (decoding (n, v)) (rle_decode t)
 
+type ('nonterminal, 'terminal) symbol =
+	| N of 'nonterminal
+	| T of 'terminal
+
