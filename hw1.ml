@@ -63,3 +63,35 @@ type ('nonterminal, 'terminal) symbol =
 	| N of 'nonterminal
 	| T of 'terminal
 
+let rec evaluate_production prod generatives =
+	match prod with
+	| N nonterminal -> subset [nonterminal] generatives
+	| T terminal -> true
+
+let rec evaluate_rhs rhs generatives =
+	match rhs with
+	| [] -> true
+	| h::t -> if evaluate_production h generatives then evaluate_rhs t generatives else false
+
+ let rec evaluate_rules (rules, generatives) =
+	match rules with
+	| [] -> (rules, generatives)
+	| (nt, rhs)::t -> if evaluate_rhs rhs generatives && not (subset [nt] generatives) then evaluate_rules (t, (nt::generatives)) else evaluate_rules (t, generatives)
+
+let evaluate_rule_generatives_pair (rules, generatives) =
+	let generative_list = snd (evaluate_rules (rules, generatives)) in
+	(rules, generative_list)
+
+let evaluate_fixed_point_rules rules =
+	computed_fixed_point (fun (_, x) (_, y) -> equal_sets x y) evaluate_rule_generatives_pair (rules, [])
+
+let rec filter_rules rules generatives =
+	match rules with
+	| [] -> []
+	| (nt, rhs)::t -> if evaluate_rhs rhs generatives then (nt, rhs)::filter_rules t generatives else filter_rules t generatives
+
+let filter_blind_alleys g =
+	let start_symbol = fst g in
+	let rules = filter_rules (snd g) (snd (evaluate_fixed_point_rules (snd g))) in
+	(start_symbol, rules)
+
